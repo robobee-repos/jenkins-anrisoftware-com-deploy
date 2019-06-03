@@ -1,0 +1,53 @@
+/*
+ * Mandatory:
+ *
+ * vars.jenkins.hosts[]
+ * vars.jenkins.issuer
+ * 
+ * Optional:
+ * 
+ * vars.jenkins.port
+ *     Defaults to 8080.
+ * vars.nginx.clientMaxBodySize
+ *     Defaults to "".
+ *
+ */
+
+import "robobeerun-templates/_cert_config.stg"
+import "robobeerun-templates/_ingress_config.stg"
+
+/*
+ * 
+ */
+xx-jenkins-ingress-yaml(parent, vars) ::= <<
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  namespace: jenkins-anrisoftware-com
+  labels:
+    tier: frontend
+  annotations:
+    <ingressDefaultAnnotations(vars.nginx)>
+spec:
+  <ingressDefaultSpec("jenkins-ingress", vars.jenkins.hosts)>
+
+---
+
+<ingressService("jenkins-ingress", "jenkins", "jenkins-anrisoftware-com", vars.jenkins)>
+
+---
+
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: jenkins-ingress
+  namespace: jenkins-anrisoftware-com
+spec:
+  <certDefaultSpec("jenkins-ingress-tls", vars.jenkins.hosts, vars.jenkins.issuer)>
+
+---
+
+>>
