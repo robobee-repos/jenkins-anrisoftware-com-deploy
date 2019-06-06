@@ -1,0 +1,28 @@
+/*
+ * Mandatory:
+ *
+ * vars.jenkins.ssh.hosts
+ * vars.jenkins.ssh.id_rsa
+ * vars.jenkins.ssh.user
+ * vars.jenkins.ssh.pass
+ */
+
+/*
+ *
+ */
+bb-jenkins-ssh-yaml(parent, vars) ::= <<
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jenkins-ssh
+  namespace: project-anrisoftware-com
+  labels:
+    tier: backend
+type: Opaque
+data:
+  ssh_hosts: <vars.jenkins.ssh.hosts;format="base64">
+  ssh_id_rsa: <vars.jenkins.ssh.id_rsa;format="base64">
+  ssh_user: <vars.jenkins.ssh.user;format="base64">
+  ssh_pass: <vars.jenkins.ssh.pass;format="base64">
+
+>>
