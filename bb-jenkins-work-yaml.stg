@@ -8,7 +8,7 @@
 /*
  * 
  */
-bb-volumes-yaml(parent, vars) ::= <<
+bb-jenkins-work-yaml(parent, vars) ::= <<
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
