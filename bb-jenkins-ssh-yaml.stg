@@ -15,7 +15,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: jenkins-ssh
-  namespace: project-anrisoftware-com
+  namespace: jenkins-anrisoftware-com
   labels:
     tier: backend
 type: Opaque
