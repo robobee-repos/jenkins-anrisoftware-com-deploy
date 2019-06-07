@@ -23,6 +23,6 @@ data:
   ssh_hosts: <vars.jenkins.ssh.hosts;format="base64">
   ssh_id_rsa: <vars.jenkins.ssh.id_rsa;format="base64">
   ssh_user: <vars.jenkins.ssh.user;format="base64">
-  ssh_pass: <vars.jenkins.ssh.pass;format="base64">
+  ssh_pass: "<vars.jenkins.ssh.pass;format="base64">"
 
 >>
