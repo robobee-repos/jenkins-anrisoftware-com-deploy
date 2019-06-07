@@ -1,0 +1,24 @@
+/*
+ * Mandatory:
+ *
+ * vars.jenkins.volume.storage
+ *
+ */
+
+/*
+ * 
+ */
+bb-volumes-yaml(parent, vars) ::= <<
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-work
+  namespace: jenkins-anrisoftware-com
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: <vars.jenkins.volume.storage>
+
+>>

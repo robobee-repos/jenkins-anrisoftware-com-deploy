@@ -16,8 +16,6 @@ kind: Secret
 metadata:
   name: jenkins-ssh
   namespace: jenkins-anrisoftware-com
-  labels:
-    tier: backend
 type: Opaque
 data:
   ssh_hosts: <vars.jenkins.ssh.hosts;format="base64">
