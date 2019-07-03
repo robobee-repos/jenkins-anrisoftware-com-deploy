@@ -1,0 +1,37 @@
+/*
+ *
+ */
+
+/*
+ *
+ */
+bb-jenkins-cmds-yaml(parent, vars) ::= <<
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-cmds
+  namespace: jenkins-anrisoftware-com
+data:
+  docker-login.sh: |
+    #!/bin/bash
+    set -e
+    echo ${REGISTRY_TOKEN} | docker login ${REGISTRY_NAME} -u ${REGISTRY_USER} --password-stdin
+  docker-build.sh: |
+    #!/bin/bash
+    set -e
+    LABELS=(
+    --label="GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL}"
+    --label="GIT_COMMIT=${GIT_COMMIT}"
+    --label="GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME}"
+    --label="GIT_BRANCH=${GIT_BRANCH}"
+    --label="BUILD_ID=${BUILD_ID}"
+    )
+    TAG="${REGISTRY_NAME}/${PROJECT_NAME}/${ARTIFACT_NAME}:${ARTIFACT_VERSION}"
+    docker build ${LABELS[*]} --tag=${TAG} ${DOCKER_CONTEXT}
+  docker-push.sh: |
+    #!/bin/bash
+    set -e
+    TAG="${REGISTRY_NAME}/${PROJECT_NAME}/${ARTIFACT_NAME}:${ARTIFACT_VERSION}"
+    docker push ${TAG}
+
+>>
